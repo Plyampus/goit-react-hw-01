@@ -1,7 +1,16 @@
-import Transaction from '../Transaction/Transaction.jsx';
-import css from '../TransactionHistory/TransactionHistory.module.css';
+import React from 'react';
+import css from './TransactionHistory.module.css';
 
-export default function TransactionHistory({ transactions }) {
+
+const Transaction = ({ type, amount, currency }) => (
+  <tr>
+    <td className={css.td}>{type}</td>
+    <td className={css.td}>{amount}</td>
+    <td className={css.td}>{currency}</td>
+  </tr>
+);
+
+export default function TransactionHistory({ items })  {
   return (
     <table className={css.table}>
       <thead>
@@ -12,17 +21,15 @@ export default function TransactionHistory({ transactions }) {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Invoice</td>
-          <td>125</td>
-          <td>USD</td>
-        </tr>
-        <tr>
-          <td>Withdrawal</td>
-          <td>85</td>
-          <td>USD</td>
-        </tr>
+        {items.map(({ id, type, amount, currency }) => (
+          <Transaction
+            key={id}
+            type={type}
+            amount={amount}
+            currency={currency}
+          />
+        ))}
       </tbody>
     </table>
   );
-}
+};
